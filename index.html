@@ -213,31 +213,31 @@
 
             <!-- Feature Buttons Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-3">
-                <button onclick="switchTab('routine')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('routine')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-calendar-days"></i></div>
                     <span class="text-xs font-semibold">Routine</span>
                 </button>
-                <button onclick="switchTab('students')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('students')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-users"></i></div>
                     <span class="text-xs font-semibold">Student List</span>
                 </button>
-                <button onclick="switchTab('teachers')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('teachers')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-chalkboard-user"></i></div>
                     <span class="text-xs font-semibold">Teacher List</span>
                 </button>
-                <button onclick="switchTab('notices')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('notices')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-bullhorn"></i></div>
                     <span class="text-xs font-semibold">Notice Board</span>
                 </button>
-                <button onclick="switchTab('assignments')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('assignments')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-book-open"></i></div>
-                    <span class="text-xs font-semibold">jobs</span>
+                    <span class="text-xs font-semibold">Assignments</span>
                 </button>
-                <button onclick="switchTab('notes')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('notes')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-file-lines"></i></div>
                     <span class="text-xs font-semibold">Study Notes</span>
                 </button>
-                <button onclick="switchTab('chat')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
+                <button onclick="switchTab('chat')" class="feature-btn bg-slate-800 hover:bg-slate-700 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-comments"></i></div>
                     <span class="text-xs font-semibold">Live Chat</span>
                 </button>
@@ -295,7 +295,7 @@
 
     </main>
 
-    <!-- DEVELOPER INFO MODAL (Everyone can view) -->
+    <!-- DEVELOPER INFO MODAL -->
     <div id="developerModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl text-center relative">
             <button onclick="closeDeveloperModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
@@ -313,7 +313,7 @@
         </div>
     </div>
 
-    <!-- EDIT DEVELOPER MODAL (Admin Only) -->
+    <!-- EDIT DEVELOPER MODAL -->
     <div id="editDeveloperModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-700 pb-3">
@@ -400,7 +400,7 @@
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeProfileModal()" class="px-4 py-2 bg-slate-700 text-xs font-semibold rounded-xl text-slate-300">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-primary text-xs font-semibold rounded-xl text-white">Save Changes (Pending Approval)</button>
+                    <button type="submit" id="updateProfileBtn" class="px-4 py-2 bg-primary hover:bg-indigo-600 text-xs font-semibold rounded-xl text-white cursor-pointer">Save Changes (Pending Approval)</button>
                 </div>
             </form>
         </div>
@@ -840,11 +840,7 @@
                                     <p class="text-[11px] text-slate-400">Online • Tap here for info</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-4 text-slate-300">
-                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-video text-sm"></i></button>
-                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-phone text-sm"></i></button>
-                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-ellipsis-vertical text-sm"></i></button>
-                            </div>
+                            
                         </div>
 
                         <!-- WhatsApp Messages Container -->
@@ -854,8 +850,7 @@
 
                         <!-- WhatsApp Input Footer -->
                         <form id="chatForm" class="p-3 bg-[#202c33] border-t border-slate-700/50 flex items-center gap-2 z-10">
-                            <button type="button" class="text-slate-400 hover:text-emerald-400 p-2 text-lg transition"><i class="fa-regular fa-face-smile"></i></button>
-                            <button type="button" class="text-slate-400 hover:text-emerald-400 p-2 text-base transition"><i class="fa-solid fa-paperclip"></i></button>
+                            
                             <input type="text" id="chatInput" required autocomplete="off" placeholder="Type a message..." class="flex-1 bg-[#2a3942] border-none rounded-lg px-4 py-2.5 text-sm focus:outline-none text-[#e9edef] placeholder-slate-400 shadow-inner">
                             <button type="submit" class="w-10 h-10 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow transition transform active:scale-95"><i class="fa-solid fa-paper-plane text-xs"></i></button>
                         </form>
@@ -1119,7 +1114,6 @@
                 chats.forEach(c => {
                     const isMe = currentUser && c.author === currentUser.name;
                     if (isMe) {
-                        // WhatsApp Sent Message Bubble (Right Side - Green Bubble)
                         html += `
                             <div class="flex flex-col items-end mb-1">
                                 <div class="bg-[#005c4b] text-[#e9edef] px-3.5 py-1.5 rounded-lg rounded-tr-none max-w-[75%] text-xs shadow-sm break-words relative">
@@ -1132,7 +1126,6 @@
                             </div>
                         `;
                     } else {
-                        // WhatsApp Received Message Bubble (Left Side - Dark Bubble with Sender Name)
                         html += `
                             <div class="flex flex-col items-start mb-1">
                                 <div class="bg-[#202c33] text-[#e9edef] px-3.5 py-1.5 rounded-lg rounded-tl-none max-w-[75%] text-xs shadow-sm border border-slate-700/40 break-words relative">
@@ -1229,7 +1222,12 @@
                                     <h5 class="font-bold text-sm text-white">${user.name} <span class="text-xs text-cyan-400">(ID: ${user.roll})</span> <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">${user.role}</span></h5>
                                     <p class="text-xs text-slate-400">${user.department} | Sem: ${user.semester} | Grp: ${user.group}</p>
                                 </div>
-                                <button onclick="deleteStudent('${user.roll}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-500 text-xs font-semibold rounded text-white"><i class="fa-solid fa-trash mr-1"></i> Remove</button>
+                                <div class="flex gap-2 items-center">
+                                    <button onclick="toggleUserRole('${user.roll}', '${user.role}')" class="px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-xs font-semibold rounded text-white">
+                                        ${user.role === 'CR' ? 'Make Student' : 'Make CR'}
+                                    </button>
+                                    <button onclick="deleteStudent('${user.roll}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-500 text-xs font-semibold rounded text-white"><i class="fa-solid fa-trash mr-1"></i> Remove</button>
+                                </div>
                             </div>
                         `;
                     }
@@ -1316,6 +1314,21 @@
                 loadPendingData();
             } catch(err) {
                 alert("Error: " + err.message);
+            }
+        }
+
+        window.toggleUserRole = async function(roll, currentRole) {
+            const newRole = (currentRole === 'CR') ? 'Student' : 'CR';
+            const confirmMsg = `Aapni ki nishchit vabe ei user-er role "${currentRole}" theke "${newRole}"-e convert korte chan?`;
+            
+            if(!confirm(confirmMsg)) return;
+            
+            try {
+                await updateDoc(doc(db, "students", roll), { role: newRole });
+                alert(`Successfully converted to ${newRole}!`);
+                loadPendingData();
+            } catch(err) {
+                alert("Error updating role: " + err.message);
             }
         }
 
@@ -1432,26 +1445,43 @@
             document.getElementById('profileModal').classList.add('hidden');
         }
 
-        document.getElementById('updateProfileForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('upName').value;
-            const phone = document.getElementById('upPhone').value;
-            const department = document.getElementById('upDept5').value;
-            const semester = document.getElementById('upSemester').value;
-            const group = document.getElementById('upGroup').value;
-            const address = document.getElementById('upAddress').value;
+        // Fixed Profile Update Handler (Optimized for Mobile/Phones)
+        const updateProfileForm = document.getElementById('updateProfileForm');
+        if(updateProfileForm) {
+            updateProfileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const saveBtn = document.getElementById('updateProfileBtn');
+                if(saveBtn) saveBtn.innerText = "Saving...";
 
-            try {
-                appUpdate: await updateDoc(doc(db, "students", currentUser.roll), {
-                    name, phone, department, semester, group, address, status: "pending"
-                });
-                alert("Profile update successful! Approval required.");
-                closeProfileManagerModal();
-                logout();
-            } catch(err) {
-                alert("Error: " + err.message);
-            }
-        });
+                const name = document.getElementById('upName').value;
+                const phone = document.getElementById('upPhone').value;
+                const department = document.getElementById('upDept').value;
+                const semester = document.getElementById('upSemester').value;
+                const group = document.getElementById('upGroup').value;
+                const address = document.getElementById('upAddress').value;
+
+                try {
+                    await updateDoc(doc(db, "students", currentUser.roll), {
+                        name, phone, department, semester, group, address, status: "pending"
+                    });
+                    
+                    currentUser.name = name;
+                    currentUser.phone = phone;
+                    currentUser.department = department;
+                    currentUser.semester = semester;
+                    currentUser.group = group;
+                    currentUser.address = address;
+                    currentUser.status = "pending";
+
+                    alert("Profile update successful! Approval required.");
+                    closeProfileModal();
+                    logout();
+                } catch(err) {
+                    alert("Error: " + err.message);
+                    if(saveBtn) saveBtn.innerText = "Save Changes (Pending Approval)";
+                }
+            });
+        }
 
         window.logout = function() {
             location.reload();
