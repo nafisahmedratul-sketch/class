@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PGPI-CST-3RD</title>
+    <title>PGPI Portal - RBAC Multi-Department</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -23,10 +23,15 @@
 </head>
 <body class="bg-slate-900 dark:bg-slate-900 text-slate-100 font-sans antialiased min-h-screen flex flex-col" id="bodyRoot">
 
-    <!-- PREMIUM DEVELOPER BANNER -->
-    <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 border-b border-indigo-500/30 py-2 px-4 text-center text-xs tracking-wider text-indigo-200 shadow-inner flex items-center justify-center gap-2">
-        <i class="fa-solid fa-code text-amber-400"></i>
-        <span>Designed & Developed by <strong class="text-white font-semibold tracking-normal bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-rose-400">Nafis Ahmed Ratul</strong></span>
+    <!-- PREMIUM DEVELOPER BANNER WITH BUTTON -->
+    <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-slate-900 border-b border-indigo-500/30 py-2.5 px-4 text-center text-xs tracking-wider text-indigo-200 shadow-inner flex items-center justify-between">
+        <div class="flex items-center gap-2 mx-auto">
+            <i class="fa-solid fa-code text-amber-400"></i>
+            <span>Designed & Developed by <strong class="text-white font-semibold tracking-normal bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-rose-400" id="displayDevName">Nafis Ahmed Ratul</strong></span>
+        </div>
+        <button onclick="openDeveloperModal()" class="cursor-pointer bg-indigo-600/60 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg text-[11px] font-semibold transition border border-indigo-400/40 flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-user-gear text-amber-300"></i> Developer Profile
+        </button>
     </div>
 
     <!-- TOP NAVIGATION -->
@@ -35,7 +40,7 @@
             <div class="bg-gradient-to-tr from-primary to-secondary p-2.5 rounded-xl text-white shadow-lg shadow-indigo-500/30">
                 <i class="fa-solid fa-graduation-cap text-xl"></i>
             </div>
-            <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">PGPI CST 3RD SEMESTER</span>
+            <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent" id="navHeaderTitle">PGPI PORTAL</span>
         </div>
         <div class="flex items-center gap-3">
             <button onclick="toggleTheme()" class="cursor-pointer bg-slate-700/50 hover:bg-slate-700 p-2.5 rounded-full border border-slate-600 text-amber-400 transition" title="Toggle Theme">
@@ -61,14 +66,14 @@
             <div class="flex border-b border-slate-700 mb-6">
                 <button onclick="switchAuthTab('login')" id="loginTabBtn" class="flex-1 pb-3 font-semibold text-primary border-b-2 border-primary transition text-sm">Login</button>
                 <button onclick="switchAuthTab('register')" id="registerTabBtn" class="flex-1 pb-3 font-medium text-slate-400 hover:text-slate-200 transition text-sm">Register</button>
-                <button onclick="switchAuthTab('admin')" id="adminTabBtn" class="flex-1 pb-3 font-medium text-slate-400 hover:text-slate-200 transition text-sm">Admin</button>
+                <button onclick="switchAuthTab('admin')" id="adminTabBtn" class="flex-1 pb-3 font-medium text-slate-400 hover:text-slate-200 transition text-sm">Super Admin</button>
             </div>
 
             <!-- Login Form -->
             <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Student Roll</label>
-                    <input type="text" id="loginRoll" required placeholder="e.g. 102540" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Student Roll / User ID</label>
+                    <input type="text" id="loginRoll" required placeholder="e.g. 102540 or ID" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1">
@@ -80,7 +85,7 @@
                 <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-primary to-indigo-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Login to Portal</button>
             </form>
 
-            <!-- Register Form -->
+            <!-- Register Form with Dept, Semester, Group -->
             <form id="registerForm" class="space-y-3 hidden">
                 <div>
                     <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Full Name</label>
@@ -88,7 +93,7 @@
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Roll</label>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Roll / ID</label>
                         <input type="text" id="regRoll" required placeholder="317105" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
                     </div>
                     <div>
@@ -96,14 +101,58 @@
                         <input type="text" id="regPhone" required placeholder="017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
                     </div>
                 </div>
+                
+                <!-- Department, Semester, Group Selectors -->
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-semibold uppercase text-slate-400 mb-1">Department</label>
+                        <select id="regDept" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs focus:border-primary focus:outline-none text-white">
+                            <option value="MT">MT</option>
+                            <option value="CST">CST</option>
+                            <option value="ET">ET</option>
+                            <option value="CIVIL">CIVIL</option>
+                            <option value="Power">Power</option>
+                            <option value="RAC">RAC</option>
+                            <option value="ENT">ENT</option>
+                            <option value="CONT">CONT</option>
+                            <option value="ENV">ENV</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold uppercase text-slate-400 mb-1">Semester</label>
+                        <select id="regSemester" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs focus:border-primary focus:outline-none text-white">
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd" selected>3rd</option>
+                            <option value="4th">4th</option>
+                            <option value="5th">5th</option>
+                            <option value="6th">6th</option>
+                            <option value="7th">7th</option>
+                            <option value="8th">8th</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-semibold uppercase text-slate-400 mb-1">Group</label>
+                        <select id="regGroup" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs focus:border-primary focus:outline-none text-white">
+                            <option value="A1">A1</option>
+                            <option value="B1">B1</option>
+                            <option value="A2">A2</option>
+                            <option value="B2">B2</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Department</label>
-                        <input type="text" id="regDept" required placeholder="CST" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">System Role</label>
+                        <select id="regRole" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
+                            <option value="Student">User (Student)</option>
+                            <option value="CR">CR (Class Representative)</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Email</label>
-                        <input type="email" id="regEmail" required placeholder="example@gmail.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
+                        <input type="email" id="regEmail" required placeholder="gmail@.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
                     </div>
                 </div>
                 <div>
@@ -114,24 +163,23 @@
                     <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Password</label>
                     <input type="password" id="regPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
-                <p class="text-[11px] text-amber-400 bg-amber-500/10 p-2 rounded-lg border border-amber-500/20"><i class="fa-solid fa-circle-info mr-1"></i> Admin approval required before login.</p>
+                <p class="text-[11px] text-amber-400 bg-amber-500/10 p-2 rounded-lg border border-amber-500/20"><i class="fa-solid fa-circle-info mr-1"></i> Admin / CR approval required before login.</p>
                 <button type="submit" id="regSubmitBtn" class="w-full bg-gradient-to-r from-secondary to-cyan-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Complete Registration</button>
             </form>
 
-            <!-- Admin Form -->
+            <!-- Super Admin Form -->
             <form id="adminForm" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Admin Username</label>
-                    <input type="text" id="adminUser" required placeholder="Not for everyone" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Super Admin Username</label>
+                    <input type="text" id="adminUser" required placeholder="admin" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1">
-                        <label class="block text-xs font-semibold uppercase text-slate-400">Admin Password</label>
-                        
+                        <label class="block text-xs font-semibold uppercase text-slate-400">Password</label>
                     </div>
-                    <input type="password" id="adminPass" required placeholder="Don't try" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
+                    <input type="password" id="adminPass" required placeholder="admin123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Admin Portal Login</button>
+                <button type="submit" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Super Admin Master Login</button>
             </form>
         </section>
 
@@ -152,7 +200,7 @@
                         <i class="fa-solid fa-user-pen"></i> Update Info
                     </button>
                     <button id="adminPanelNavBtn" onclick="toggleAdminPanel()" class="hidden px-4 py-2 bg-rose-600/30 border border-rose-500/40 text-rose-300 hover:bg-rose-600/50 text-xs font-semibold rounded-xl transition items-center gap-2">
-                        <i class="fa-solid fa-shield-halved"></i> Admin Control Panel
+                        <i class="fa-solid fa-shield-halved"></i> Control Panel
                     </button>
                 </div>
             </div>
@@ -195,31 +243,44 @@
                 </button>
             </div>
 
-            <!-- Admin Control Panel View -->
+            <!-- RBAC Hierarchy Control Panel View -->
             <div id="adminControlPanel" class="hidden bg-slate-800 p-6 rounded-3xl border border-rose-500/30 space-y-6 shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                    <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i> Admin Approval & Settings Panel</h3>
-                    <button onclick="openAdminSettingsModal()" class="px-3 py-1.5 bg-rose-600/30 hover:bg-rose-600/50 border border-rose-500/50 text-rose-300 text-xs font-semibold rounded-lg transition"><i class="fa-solid fa-gear mr-1"></i> Change Admin Credentials</button>
+                    <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i> RBAC Control & Management Panel</h3>
+                    <div class="flex gap-2">
+                        <button id="editDevBtnAdmin" onclick="openEditDeveloperModal()" class="hidden px-3 py-1.5 bg-indigo-600/50 hover:bg-indigo-600 border border-indigo-400/40 text-white text-xs font-semibold rounded-lg transition"><i class="fa-solid fa-code mr-1"></i> Edit Developer Profile</button>
+                        <button id="adminSettingsBtn" onclick="openAdminSettingsModal()" class="hidden px-3 py-1.5 bg-rose-600/35 hover:bg-rose-600/50 border border-rose-500/50 text-rose-300 text-xs font-semibold rounded-lg transition"><i class="fa-solid fa-gear mr-1"></i> Admin Settings</button>
+                    </div>
                 </div>
                 <div class="space-y-6">
-                    <div>
-                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Manage Routine (5 Days, 6 Classes Daily)</h4>
+                    <!-- Scope Notice -->
+                    <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-700 space-y-2">
+                        <h4 class="text-xs font-bold uppercase text-indigo-400"><i class="fa-solid fa-filter mr-1"></i> Control Scope Policy</h4>
+                        <p id="controlScopeDescription" class="text-xs text-slate-300">Super Admin can view & control all data. CR Admin can only manage accounts & items matching their own department, semester, and group.</p>
+                    </div>
+
+                    <div id="routineManageSection">
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Manage Routine (Department & Semester Specific)</h4>
                         <button onclick="openRoutineModal()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-xl text-white flex items-center gap-1.5"><i class="fa-solid fa-calendar-pen"></i> Edit Routine Table</button>
                     </div>
-                    <div>
-                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Manage Teachers (Add New)</h4>
+                    <div id="teacherManageSection">
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Manage Teachers</h4>
                         <button onclick="openAddTeacherModal()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold rounded-xl text-white flex items-center gap-1.5"><i class="fa-solid fa-user-plus"></i> Add Teacher Details</button>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Pending Student Registrations / Updates</h4>
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Pending Registrations (Filtered to your Match)</h4>
                         <div id="pendingStudentsList" class="space-y-2"><p class="text-xs text-slate-400">Loading...</p></div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Approved Users & Students List (Delete / Edit Control)</h4>
+                        <div id="adminApprovedStudentsList" class="space-y-2"><p class="text-xs text-slate-400">Loading...</p></div>
                     </div>
                     <div>
                         <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">Pending Notices & Assignments Approval</h4>
                         <div id="pendingPostsList" class="space-y-2"><p class="text-xs text-slate-400">Loading...</p></div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">All Published Notices & Assignments (Admin Deletion Control)</h4>
+                        <h4 class="text-xs font-bold uppercase text-slate-400 mb-2">All Published Notices & Assignments (Deletion Control)</h4>
                         <div id="adminAllPostsList" class="space-y-2"><p class="text-xs text-slate-400">Loading...</p></div>
                     </div>
                 </div>
@@ -233,6 +294,70 @@
         </section>
 
     </main>
+
+    <!-- DEVELOPER INFO MODAL (Everyone can view) -->
+    <div id="developerModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl text-center relative">
+            <button onclick="closeDeveloperModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+            <div class="flex flex-col items-center space-y-3 pt-2">
+                <img id="devModalImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop&crop=faces" alt="Developer" class="w-24 h-24 rounded-full object-cover border-2 border-indigo-500 shadow-lg">
+                <h3 id="devModalName" class="text-lg font-bold text-white">Nafis Ahmed Ratul</h3>
+                <p id="devModalRole" class="text-xs text-indigo-400 font-medium">Lead Full-Stack Developer & Programmer</p>
+                <p id="devModalBio" class="text-xs text-slate-300 px-2 leading-relaxed">Passionate developer focused on building secure, scalable multi-department educational portals and automated web solutions.</p>
+                <div class="w-full bg-slate-900/60 p-3 rounded-xl border border-slate-700 text-left space-y-1.5 text-xs text-slate-300">
+                    <p><strong class="text-slate-400">Email:</strong> <span id="devModalEmail">nafis@portal.edu</span></p>
+                    <p><strong class="text-slate-400">Phone:</strong> <span id="devModalPhone">017XXXXXXXX</span></p>
+                    <p><strong class="text-slate-400">Institution:</strong> <span id="devModalInst">Pabna Polytechnic Institute</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT DEVELOPER MODAL (Admin Only) -->
+    <div id="editDeveloperModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                <h3 class="text-lg font-bold text-indigo-400"><i class="fa-solid fa-code mr-2"></i> Edit Developer Profile</h3>
+                <button onclick="closeEditDeveloperModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="editDeveloperForm" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Developer Name</label>
+                    <input type="text" id="edDevName" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Picture URL</label>
+                    <input type="url" id="edDevImg" required placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Designation / Role</label>
+                    <input type="text" id="edDevRole" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Bio / Info</label>
+                    <textarea id="edDevBio" rows="3" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Email</label>
+                        <input type="email" id="edDevEmail" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Phone</label>
+                        <input type="text" id="edDevPhone" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Institution</label>
+                    <input type="text" id="edDevInst" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeEditDeveloperModal()" class="px-4 py-2 bg-slate-700 text-xs font-semibold rounded-xl text-slate-300">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold rounded-xl text-white">Save Developer Info</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- UPDATE PROFILE MODAL -->
     <div id="profileModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
@@ -250,7 +375,23 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Department</label>
-                        <input type="text" id="upDept" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                        <select id="upDept" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white">
+                            <option value="MT">MT</option><option value="CST">CST</option><option value="ET">ET</option><option value="CIVIL">CIVIL</option><option value="Power">Power</option><option value="RAC">RAC</option><option value="ENT">ENT</option><option value="CONT">CONT</option><option value="ENV">ENV</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Semester</label>
+                        <select id="upSemester" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white">
+                            <option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option><option value="4th">4th</option><option value="5th">5th</option><option value="6th">6th</option><option value="7th">7th</option><option value="8th">8th</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Group</label>
+                        <select id="upGroup" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white">
+                            <option value="A1">A1</option><option value="B1">B1</option><option value="A2">A2</option><option value="B2">B2</option>
+                        </select>
                     </div>
                 </div>
                 <div>
@@ -273,7 +414,7 @@
                 <button onclick="closeRoutineModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form id="routineForm" class="space-y-4">
-                <p class="text-xs text-slate-400">Enter comma-separated subject names for each of the 6 periods across the 5 working days (Saturday & Friday are excluded).</p>
+                <p class="text-xs text-slate-400">Enter comma-separated subject names for each of the 6 periods across the 5 working days.</p>
                 <div class="space-y-3" id="routineInputsContainer"></div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeRoutineModal()" class="px-4 py-2 bg-slate-700 text-xs font-semibold rounded-xl text-slate-300">Cancel</button>
@@ -294,17 +435,23 @@
                 </div>
                 <div>
                     <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Designation / Podobi</label>
-                    <input type="text" id="tDesignation" required placeholder="Head of Department / Instructor" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
+                    <input type="text" id="tDesignation" required placeholder="Instructor" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Department</label>
+                        <select id="tDept" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-2 text-xs text-white">
+                            <option value="All">All Departments</option><option value="MT">MT</option><option value="CST">CST</option><option value="ET">ET</option><option value="CIVIL">CIVIL</option><option value="Power">Power</option><option value="RAC">RAC</option><option value="ENT">ENT</option><option value="CONT">CONT</option><option value="ENV">ENV</option>
+                        </select>
+                    </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Phone Number</label>
                         <input type="text" id="tPhone" required placeholder="017xxxxxxxx" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Email</label>
-                        <input type="email" id="tEmail" required placeholder="teacher@institute.edu" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
-                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Email</label>
+                    <input type="email" id="tEmail" required placeholder="teacher@institute.edu" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAddTeacherModal()" class="px-4 py-2 bg-slate-700 text-xs font-semibold rounded-xl text-slate-300">Cancel</button>
@@ -317,19 +464,19 @@
     <!-- ADMIN SETTINGS MODAL -->
     <div id="adminSettingsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl">
-            <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-gear mr-2"></i> Change Admin Credentials</h3>
+            <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-gear mr-2"></i> Change Super Admin Credentials</h3>
             <form id="adminSettingsForm" class="space-y-3">
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">New Admin Username</label>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">New Super Admin Username</label>
                     <input type="text" id="newAdminUser" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">New Admin Password</label>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">New Super Admin Password</label>
                     <input type="password" id="newAdminPass" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white">
                 </div>
                 <div class="flex justify-end gap-2 pt-2">
                     <button type="button" onclick="closeAdminSettingsModal()" class="px-3 py-2 bg-slate-700 text-xs font-semibold rounded-xl text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-2 bg-rose-600 text-xs font-semibold rounded-xl text-white">Update Admin Info</button>
+                    <button type="submit" class="px-3 py-2 bg-rose-600 text-xs font-semibold rounded-xl text-white">Update Super Admin</button>
                 </div>
             </form>
         </div>
@@ -339,7 +486,7 @@
     <div id="notificationModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-bell text-amber-400 mr-2"></i> Live Phone Notifications</h3>
+                <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-bell text-amber-400 mr-2"></i> Live Notifications</h3>
                 <button onclick="closeNotificationModal()" class="text-slate-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="modalNotificationList" class="space-y-2 max-h-60 overflow-y-auto">
@@ -368,7 +515,7 @@
         const db = getFirestore(app);
 
         let currentUser = null;
-        let isAdminLoggedIn = false;
+        let isPrivilegedUser = false;
         let notificationsCache = [];
 
         const defaultRoutineData = {
@@ -379,7 +526,78 @@
             "Thursday": ["Project Design", "Seminar", "Professional Ethics", "Cyber Security", "Cloud Computing", "AI Basics"]
         };
 
-        // Theme Toggle Functionality
+        const defaultDeveloperData = {
+            name: "Nafis Ahmed Ratul",
+            image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&h=300&fit=crop&crop=faces",
+            role: "Lead Full-Stack Developer & Programmer",
+            bio: "Passionate developer focused on building secure, scalable multi-department educational portals and automated web solutions.",
+            email: "nafis@portal.edu",
+            phone: "017XXXXXXXX",
+            institution: "Pabna Polytechnic Institute"
+        };
+
+        // Load developer info on start
+        async function fetchDeveloperInfo() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "developerProfile"));
+                const dev = docSnap.exists() ? docSnap.data() : defaultDeveloperData;
+                document.getElementById('displayDevName').innerText = dev.name;
+                document.getElementById('devModalName').innerText = dev.name;
+                document.getElementById('devModalImg').src = dev.image;
+                document.getElementById('devModalRole').innerText = dev.role;
+                document.getElementById('devModalBio').innerText = dev.bio;
+                document.getElementById('devModalEmail').innerText = dev.email;
+                document.getElementById('devModalPhone').innerText = dev.phone;
+                document.getElementById('devModalInst').innerText = dev.institution;
+            } catch(e) {}
+        }
+        fetchDeveloperInfo();
+
+        window.openDeveloperModal = function() {
+            document.getElementById('developerModal').classList.remove('hidden');
+        }
+        window.closeDeveloperModal = function() {
+            document.getElementById('developerModal').classList.add('hidden');
+        }
+
+        window.openEditDeveloperModal = async function() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "developerProfile"));
+                const dev = docSnap.exists() ? docSnap.data() : defaultDeveloperData;
+                document.getElementById('edDevName').value = dev.name;
+                document.getElementById('edDevImg').value = dev.image;
+                document.getElementById('edDevRole').value = dev.role;
+                document.getElementById('edDevBio').value = dev.bio;
+                document.getElementById('edDevEmail').value = dev.email;
+                document.getElementById('edDevPhone').value = dev.phone;
+                document.getElementById('edDevInst').value = dev.institution;
+            } catch(e) {}
+            document.getElementById('editDeveloperModal').classList.remove('hidden');
+        }
+        window.closeEditDeveloperModal = function() {
+            document.getElementById('editDeveloperModal').classList.add('hidden');
+        }
+
+        document.getElementById('editDeveloperForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('edDevName').value;
+            const image = document.getElementById('edDevImg').value;
+            const role = document.getElementById('edDevRole').value;
+            const bio = document.getElementById('edDevBio').value;
+            const email = document.getElementById('edDevEmail').value;
+            const phone = document.getElementById('edDevPhone').value;
+            const institution = document.getElementById('edDevInst').value;
+
+            try {
+                await setDoc(doc(db, "settings", "developerProfile"), { name, image, role, bio, email, phone, institution });
+                alert("Developer profile updated successfully!");
+                closeEditDeveloperModal();
+                fetchDeveloperInfo();
+            } catch(err) {
+                alert("Error: " + err.message);
+            }
+        });
+
         window.toggleTheme = function() {
             const body = document.getElementById('bodyRoot');
             const icon = document.getElementById('themeIcon');
@@ -404,13 +622,16 @@
             document.getElementById('adminTabBtn').className = tab === 'admin' ? 'flex-1 pb-3 font-semibold text-rose-500 border-b-2 border-rose-500 transition text-sm' : 'flex-1 pb-3 font-medium text-slate-400 hover:text-slate-200 transition text-sm';
         }
 
-        // Register Handler
+        // Register Handler capturing department, semester, and group
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('regName').value;
             const roll = document.getElementById('regRoll').value.trim();
             const phone = document.getElementById('regPhone').value;
             const department = document.getElementById('regDept').value;
+            const semester = document.getElementById('regSemester').value;
+            const group = document.getElementById('regGroup').value;
+            const role = document.getElementById('regRole').value;
             const email = document.getElementById('regEmail').value;
             const address = document.getElementById('regAddress').value;
             const password = document.getElementById('regPass').value;
@@ -421,16 +642,16 @@
                 const docRef = doc(db, "students", roll);
                 const docSnap = await getDoc(docRef);
                 if(docSnap.exists()) {
-                    alert("Ei roll number diye already account registered royeche!");
+                    alert("Ei roll/ID diye already account registered royeche!");
                     btn.innerText = "Complete Registration";
                     return;
                 }
 
                 await setDoc(docRef, {
-                    name, roll, phone, department, email, address, password, status: "pending", createdAt: new Date()
+                    name, roll, phone, department, semester, group, role, email, address, password, status: "pending", createdAt: new Date()
                 });
 
-                alert("Registration successful! Admin approve korar por login korte parben.");
+                alert("Registration successful! CR Admin ba Super Admin approve korar por login korte parben.");
                 document.getElementById('registerForm').reset();
                 switchAuthTab('login');
             } catch (err) {
@@ -440,7 +661,7 @@
             }
         });
 
-        // Student Login Handler
+        // User / CR Login Handler
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const roll = document.getElementById('loginRoll').value.trim();
@@ -463,10 +684,10 @@
                         return;
                     }
                     currentUser = userData;
-                    isAdminLoggedIn = false;
-                    loadDashboard(userData.name, "Student");
+                    isPrivilegedUser = (userData.role === 'CR');
+                    loadDashboard(userData.name, userData.role === 'CR' ? `CR Admin (${userData.department} - ${userData.semester} - Group ${userData.group})` : 'Student');
                 } else {
-                    alert("Ei roll number-e kono user paowa jayni!");
+                    alert("Ei ID/Roll number-e kono user paowa jayni!");
                 }
             } catch (err) {
                 alert("Error: " + err.message);
@@ -475,7 +696,7 @@
             }
         });
 
-        // Admin Login Handler
+        // Super Admin Master Login Handler
         document.getElementById('adminForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = document.getElementById('adminUser').value;
@@ -490,17 +711,17 @@
             }
 
             if (user === savedUser && pass === savedPass) {
-                isAdminLoggedIn = true;
-                currentUser = { name: "System Administrator", role: "Administrator" };
-                loadDashboard("System Administrator", "Administrator");
+                isPrivilegedUser = true;
+                currentUser = { name: "Nafis Ahmed Ratul", role: "Super Admin", department: "All", semester: "All", group: "All" };
+                loadDashboard("Nafis Ahmed Ratul (Super Admin)", "Super Admin (Full Access)");
                 loadPendingData();
             } else {
-                alert("Vul admin username ba password!");
+                alert("Vul Super Admin username ba password!");
             }
         });
 
         window.showForgotPassword = function() {
-            const roll = prompt("Apnar registered student roll number-ti din:");
+            const roll = prompt("Apnar registered roll/ID number-ti din:");
             if(!roll) return;
             getDoc(doc(db, "students", roll.trim())).then(snap => {
                 if(snap.exists()) {
@@ -511,21 +732,7 @@
             });
         }
 
-        // Admin Forgot Password Recovery Helper (Reads directly from Firebase database)
-        window.showAdminForgotHelp = async function() {
-            try {
-                const adminDoc = await getDoc(doc(db, "settings", "adminCreds"));
-                if(adminDoc.exists()) {
-                    alert(`Saved Admin Credentials:\nUsername: ${adminDoc.data().username}\nPassword: ${adminDoc.data().password}`);
-                } else {
-                    alert(`Default Admin Credentials:\nUsername: admin\nPassword: admin123`);
-                }
-            } catch(e) {
-                alert(`Default Admin Credentials:\nUsername: admin\nPassword: admin123`);
-            }
-        }
-
-        function loadDashboard(name, role) {
+        function loadDashboard(name, roleDesc) {
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('dashboardSection').classList.remove('hidden');
             document.getElementById('userBadge').classList.remove('hidden');
@@ -536,12 +743,21 @@
             document.getElementById('navUserName').innerText = name;
             document.getElementById('dashAvatarText').innerText = firstLetter;
             document.getElementById('dashWelcomeName').innerText = `Welcome, ${name}!`;
-            document.getElementById('dashWelcomeRole').innerText = `Role: ${role}`;
+            document.getElementById('dashWelcomeRole').innerText = roleDesc;
 
-            if (isAdminLoggedIn) {
+            if (isPrivilegedUser || currentUser.role === 'Super Admin' || currentUser.role === 'CR') {
                 document.getElementById('adminPanelNavBtn').classList.remove('hidden');
                 document.getElementById('adminPanelNavBtn').classList.add('flex');
             }
+            if (currentUser.role === 'Super Admin') {
+                document.getElementById('adminSettingsBtn').classList.remove('hidden');
+                document.getElementById('editDevBtnAdmin').classList.remove('hidden');
+                document.getElementById('controlScopeDescription').innerText = "Super Admin mode: Full control across all departments, semesters, and groups.";
+            } else if (currentUser.role === 'CR') {
+                document.getElementById('controlScopeDescription').innerText = `CR Admin mode: Limited to Department: ${currentUser.department}, Semester: ${currentUser.semester}, Group: ${currentUser.group}.`;
+            }
+
+            document.getElementById('navHeaderTitle').innerText = currentUser.role === 'Super Admin' ? `PGPI MASTER PORTAL` : `PGPI - ${currentUser.department} ${currentUser.semester} (${currentUser.group})`;
             switchTab('notices');
             fetchNotifications();
         }
@@ -553,7 +769,7 @@
                 container.innerHTML = `
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-calendar-days text-indigo-400 mr-2"></i> Class Routine (5 Days, 6 Classes Daily)</h3>
+                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-calendar-days text-indigo-400 mr-2"></i> Class Routine (${currentUser.department || 'CST'} - ${currentUser.semester || '3rd'} - ${currentUser.group || 'A1'})</h3>
                             <span class="text-xs text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">Friday & Saturday Off</span>
                         </div>
                         <div id="routineTableContainer" class="overflow-x-auto"><p class="text-xs text-slate-400">Loading routine...</p></div>
@@ -561,7 +777,7 @@
                 `;
                 fetchRoutineTable();
             } else if(tabName === 'students') {
-                container.innerHTML = `<h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-users text-cyan-400 mr-2"></i> Approved Students List</h3><div id="studentListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3"><p class="text-xs text-slate-400">Loading students...</p></div>`;
+                container.innerHTML = `<h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-users text-cyan-400 mr-2"></i> Student List (${currentUser.role === 'Super Admin' ? 'All' : currentUser.department + ' ' + currentUser.semester})</h3><div id="studentListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3"><p class="text-xs text-slate-400">Loading users...</p></div>`;
                 fetchStudents();
             } else if(tabName === 'teachers') {
                 container.innerHTML = `
@@ -609,7 +825,7 @@
             } else if(tabName === 'chat') {
                 container.innerHTML = `
                     <div class="space-y-4 flex flex-col h-[500px]">
-                        <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-comments text-blue-400 mr-2"></i> Live Discussion Forum</h3>
+                        <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-comments text-blue-400 mr-2"></i> Live Discussion Forum (${currentUser.department} - ${currentUser.semester})</h3>
                         <div id="chatMessagesContainer" class="flex-1 bg-slate-900/80 border border-slate-700 rounded-2xl p-4 overflow-y-auto space-y-3">
                             <p class="text-xs text-slate-400 italic">Loading messages...</p>
                         </div>
@@ -626,7 +842,8 @@
         async function fetchRoutineTable() {
             const container = document.getElementById('routineTableContainer');
             try {
-                const docSnap = await getDoc(doc(db, "settings", "classRoutine"));
+                const routineKey = currentUser.role === 'Super Admin' ? 'classRoutine_default' : `routine_${currentUser.department}_${currentUser.semester}`;
+                const docSnap = await getDoc(doc(db, "settings", routineKey));
                 const routine = docSnap.exists() ? docSnap.data() : defaultRoutineData;
 
                 let tableHtml = `
@@ -669,13 +886,17 @@
         }
 
         window.openRoutineModal = async function() {
-            if(!isAdminLoggedIn) { alert("Only admin can modify routine!"); return; }
+            if(!(isPrivilegedUser || currentUser.role === 'Super Admin')) {
+                alert("Aapnar routine modify korar permission nei!");
+                return;
+            }
             const container = document.getElementById('routineInputsContainer');
             container.innerHTML = `<p class="text-xs text-slate-400">Loading form...</p>`;
             document.getElementById('routineModal').classList.remove('hidden');
 
             try {
-                const docSnap = await getDoc(doc(db, "settings", "classRoutine"));
+                const routineKey = currentUser.role === 'Super Admin' ? 'classRoutine_default' : `routine_${currentUser.department}_${currentUser.semester}`;
+                const docSnap = await getDoc(doc(db, "settings", routineKey));
                 const routine = docSnap.exists() ? docSnap.data() : defaultRoutineData;
 
                 let html = "";
@@ -708,12 +929,8 @@
 
         document.getElementById('routineForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if(!isAdminLoggedIn) { alert("Unauthorized action!"); return; }
-
             const inputs = document.querySelectorAll('.routine-input');
-            const newRoutine = {
-                "Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": []
-            };
+            const newRoutine = { "Sunday": [], "Monday": [], "Tuesday": [], "Wednesday": [], "Thursday": [] };
 
             inputs.forEach(input => {
                 const day = input.getAttribute('data-day');
@@ -722,7 +939,8 @@
             });
 
             try {
-                await setDoc(doc(db, "settings", "classRoutine"), newRoutine);
+                const routineKey = currentUser.role === 'Super Admin' ? 'classRoutine_default' : `routine_${currentUser.department}_${currentUser.semester}`;
+                await setDoc(doc(db, "settings", routineKey), newRoutine);
                 alert("Routine update successful!");
                 closeRoutineModal();
                 fetchRoutineTable();
@@ -738,13 +956,18 @@
                 snapshot.forEach(docSnap => {
                     const s = docSnap.data();
                     if(s.status === "approved") {
+                        if (currentUser.role === 'CR') {
+                            if (s.department !== currentUser.department || s.semester !== currentUser.semester || s.group !== currentUser.group) {
+                                return;
+                            }
+                        }
                         html += `
                             <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-700/60 flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-10 h-10 rounded-full bg-cyan-600/20 text-cyan-400 flex items-center justify-center font-bold text-sm">${s.name.charAt(0)}</div>
                                     <div>
-                                        <h5 class="font-bold text-sm text-white">${s.name}</h5>
-                                        <p class="text-xs text-slate-400">Roll: ${s.roll} | Dept: ${s.department}</p>
+                                        <h5 class="font-bold text-sm text-white">${s.name} <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded ml-1">${s.role || 'Student'}</span></h5>
+                                        <p class="text-xs text-slate-400">ID: ${s.roll} | Dept: ${s.department} | Sem: ${s.semester} | Grp: ${s.group}</p>
                                         <p class="text-[11px] text-slate-500">${s.phone} | ${s.address}</p>
                                     </div>
                                 </div>
@@ -752,7 +975,7 @@
                         `;
                     }
                 });
-                document.getElementById('studentListContainer').innerHTML = html || '<p class="text-xs text-slate-400 italic">No approved students found.</p>';
+                document.getElementById('studentListContainer').innerHTML = html || '<p class="text-xs text-slate-400 italic">No approved users found matching your scope.</p>';
             } catch(err) {
                 document.getElementById('studentListContainer').innerHTML = `<p class="text-xs text-rose-400">Error loading list.</p>`;
             }
@@ -766,17 +989,19 @@
                 snapshot.forEach(docSnap => {
                     const t = docSnap.data();
                     const docId = docSnap.id;
+                    if (currentUser.role === 'CR' && t.department !== 'All' && t.department !== currentUser.department) return;
+                    const canDelete = (isPrivilegedUser || currentUser.role === 'Super Admin');
                     html += `
                         <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-700/60 flex items-center justify-between">
                             <div class="flex items-center space-x-3">
                                 <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center font-bold text-lg">${t.name.charAt(0)}</div>
                                 <div>
                                     <h4 class="font-bold text-sm text-white">${t.name}</h4>
-                                    <p class="text-xs text-slate-400">${t.designation}</p>
+                                    <p class="text-xs text-slate-400">${t.designation} (${t.department || 'All Dept'})</p>
                                     <p class="text-[11px] text-emerald-400 mt-1">${t.phone} | ${t.email}</p>
                                 </div>
                             </div>
-                            ${isAdminLoggedIn ? `<button onclick="deleteTeacher('${docId}')" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>` : ''}
+                            ${canDelete ? `<button onclick="deleteTeacher('${docId}')" class="text-rose-400 hover:text-rose-300 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>` : ''}
                         </div>
                     `;
                 });
@@ -798,14 +1023,25 @@
 
             let deadline = "";
             if(type === 'assignment') {
-                deadline = prompt("Assignment Deadline (e.g. 25th April, 2026):");
+                deadline = prompt("Assignment Deadline:");
                 if(!deadline) return;
             }
 
+            const initialStatus = (currentUser.role === 'Student') ? 'pending' : 'approved';
+
             addDoc(collection(db, "posts"), {
-                type, title: heading, description, deadline: deadline || null, author: currentUser.name, status: "pending", createdAt: new Date()
+                type, title: heading, description, deadline: deadline || null,
+                department: currentUser.department || 'All',
+                semester: currentUser.semester || 'All',
+                group: currentUser.group || 'All',
+                author: `${currentUser.name} (${currentUser.role || 'Student'})`, status: initialStatus, createdAt: new Date()
             }).then(() => {
-                alert("Successfully submitted! Admin approve korar por sobar kase show korbe.");
+                if(initialStatus === 'approved') {
+                    alert("Successfully published!");
+                    fetchApprovedPosts(type, type === 'notice' ? 'approvedNoticesContainer' : (type === 'assignment' ? 'approvedAssignmentsContainer' : 'approvedNotesContainer'));
+                } else {
+                    alert("Successfully submitted for approval.");
+                }
             }).catch(err => alert("Error: " + err.message));
         }
 
@@ -817,6 +1053,7 @@
                 querySnapshot.forEach(docSnap => {
                     const post = docSnap.data();
                     if(post.type === type && post.status === "approved") {
+                        if (currentUser.role === 'CR' && post.department !== 'All' && post.department !== currentUser.department) return;
                         let badgeColor = "amber";
                         if(type === 'assignment') badgeColor = "purple";
                         if(type === 'note') badgeColor = "rose";
@@ -833,10 +1070,7 @@
                         `;
                     }
                 });
-                let typeName = 'notice';
-                if(type === 'assignment') typeName = 'assignment';
-                if(type === 'note') typeName = 'note';
-                container.innerHTML = html || `<p class="text-xs text-slate-400 italic">Kono approved ${typeName} nei.</p>`;
+                container.innerHTML = html || `<p class="text-xs text-slate-400 italic">Kono approved item nei.</p>`;
             } catch(err) {
                 container.innerHTML = `<p class="text-xs text-rose-400">Error loading data.</p>`;
             }
@@ -848,7 +1082,10 @@
                 const snapshot = await getDocs(collection(db, "chats"));
                 let chats = [];
                 snapshot.forEach(docSnap => {
-                    chats.push(docSnap.data());
+                    const c = docSnap.data();
+                    if (currentUser.role === 'Super Admin' || c.department === currentUser.department) {
+                        chats.push(c);
+                    }
                 });
                 chats.sort((a, b) => (a.createdAt?.toMillis?.() || 0) - (b.createdAt?.toMillis?.() || 0));
 
@@ -858,20 +1095,19 @@
                         <div class="bg-slate-900 p-3 rounded-xl border border-slate-700/60 text-xs">
                             <div class="flex justify-between items-center mb-1">
                                 <span class="font-bold text-blue-400">${c.author}</span>
-                                <span class="text-[10px] text-slate-500">${c.role || ''}</span>
+                                <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">${c.role || 'Student'} (${c.department})</span>
                             </div>
                             <p class="text-slate-200">${c.message}</p>
                         </div>
                     `;
                 });
-                container.innerHTML = html || `<p class="text-xs text-slate-400 italic">No messages yet. Start the conversation!</p>`;
+                container.innerHTML = html || `<p class="text-xs text-slate-400 italic">No messages yet.</p>`;
                 container.scrollTop = container.scrollHeight;
             } catch(e) {
                 container.innerHTML = `<p class="text-xs text-rose-400">Error loading chat.</p>`;
             }
         }
 
-        // Chat Form Submission
         document.addEventListener('submit', async (e) => {
             if(e.target && e.target.id === 'chatForm') {
                 e.preventDefault();
@@ -884,6 +1120,8 @@
                         message,
                         author: currentUser.name,
                         role: currentUser.role || 'Student',
+                        department: currentUser.department || 'CST',
+                        semester: currentUser.semester || '3rd',
                         createdAt: new Date()
                     });
                     input.value = "";
@@ -905,23 +1143,34 @@
 
         async function loadPendingData() {
             const listContainer = document.getElementById('pendingStudentsList');
+            const approvedListContainer = document.getElementById('adminApprovedStudentsList');
             const postsContainer = document.getElementById('pendingPostsList');
             listContainer.innerHTML = `<p class="text-xs text-slate-400">Loading...</p>`;
+            approvedListContainer.innerHTML = `<p class="text-xs text-slate-400">Loading...</p>`;
             postsContainer.innerHTML = `<p class="text-xs text-slate-400">Loading...</p>`;
             
             try {
                 const studentSnap = await getDocs(collection(db, "students"));
                 let studentHtml = "";
+                let approvedStudentHtml = "";
                 let studentCount = 0;
+                let approvedStudentCount = 0;
+
                 studentSnap.forEach(docSnap => {
                     const user = docSnap.data();
+                    if (currentUser.role === 'CR') {
+                        if (user.department !== currentUser.department || user.semester !== currentUser.semester || user.group !== currentUser.group) {
+                            return;
+                        }
+                    }
+
                     if (user.status === "pending") {
                         studentCount++;
                         studentHtml += `
                             <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-4">
                                 <div>
-                                    <h5 class="font-bold text-sm text-white">${user.name} <span class="text-xs text-cyan-400">(Roll: ${user.roll})</span></h5>
-                                    <p class="text-xs text-slate-400">${user.department} | ${user.phone}</p>
+                                    <h5 class="font-bold text-sm text-white">${user.name} <span class="text-xs text-cyan-400">(ID: ${user.roll})</span> <span class="text-[10px] bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded">${user.role}</span></h5>
+                                    <p class="text-xs text-slate-400">${user.department} | Sem: ${user.semester} | Grp: ${user.group} | ${user.phone}</p>
                                 </div>
                                 <div class="flex gap-2">
                                     <button onclick="approveStudent('${user.roll}')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold rounded text-white">Approve</button>
@@ -929,9 +1178,21 @@
                                 </div>
                             </div>
                         `;
+                    } else if (user.status === "approved") {
+                        approvedStudentCount++;
+                        approvedStudentHtml += `
+                            <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-4">
+                                <div>
+                                    <h5 class="font-bold text-sm text-white">${user.name} <span class="text-xs text-cyan-400">(ID: ${user.roll})</span> <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">${user.role}</span></h5>
+                                    <p class="text-xs text-slate-400">${user.department} | Sem: ${user.semester} | Grp: ${user.group}</p>
+                                </div>
+                                <button onclick="deleteStudent('${user.roll}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-500 text-xs font-semibold rounded text-white"><i class="fa-solid fa-trash mr-1"></i> Remove</button>
+                            </div>
+                        `;
                     }
                 });
-                listContainer.innerHTML = studentCount === 0 ? `<p class="text-xs text-slate-400 italic">Kono pending student nei.</p>` : studentHtml;
+                listContainer.innerHTML = studentCount === 0 ? `<p class="text-xs text-slate-400 italic">Kono pending user nei.</p>` : studentHtml;
+                approvedListContainer.innerHTML = approvedStudentCount === 0 ? `<p class="text-xs text-slate-400 italic">Kono approved user nei.</p>` : approvedStudentHtml;
 
                 const postSnap = await getDocs(collection(db, "posts"));
                 let postHtml = "";
@@ -939,6 +1200,7 @@
                 postSnap.forEach(docSnap => {
                     const post = docSnap.data();
                     const id = docSnap.id;
+                    if (currentUser.role === 'CR' && post.department !== currentUser.department) return;
                     if (post.status === "pending") {
                         postCount++;
                         postHtml += `
@@ -946,7 +1208,7 @@
                                 <div>
                                     <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded font-semibold uppercase">${post.type}</span>
                                     <h5 class="font-bold text-sm text-white mt-1">${post.title}</h5>
-                                    <p class="text-xs text-slate-400">${post.description} ${post.deadline ? `| Deadline: ${post.deadline}` : ''} (By: ${post.author})</p>
+                                    <p class="text-xs text-slate-400">${post.description} (By: ${post.author})</p>
                                 </div>
                                 <div class="flex gap-2">
                                     <button onclick="approvePost('${id}', '${post.title}')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold rounded text-white">Approve</button>
@@ -972,13 +1234,14 @@
                 snapshot.forEach(docSnap => {
                     const post = docSnap.data();
                     const id = docSnap.id;
+                    if (currentUser.role === 'CR' && post.department !== currentUser.department) return;
                     count++;
                     html += `
                         <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between gap-4">
                             <div>
                                 <span class="text-[10px] bg-indigo-500/20 text-indigo-400 px-1.5 py-0.5 rounded font-semibold uppercase">${post.type} (${post.status})</span>
                                 <h5 class="font-bold text-sm text-white mt-1">${post.title}</h5>
-                                <p class="text-xs text-slate-400">${post.description} ${post.deadline ? `| Deadline: ${post.deadline}` : ''}</p>
+                                <p class="text-xs text-slate-400">${post.description}</p>
                             </div>
                             <button onclick="deletePost('${id}')" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-500 text-xs font-semibold rounded text-white"><i class="fa-solid fa-trash mr-1"></i> Delete</button>
                         </div>
@@ -992,23 +1255,34 @@
 
         window.approveStudent = async function(roll) {
             await updateDoc(doc(db, "students", roll), { status: "approved" });
-            alert("Student successfully approved!");
+            alert("User / Role successfully approved!");
             loadPendingData();
         }
 
         window.rejectStudent = async function(roll) {
             await deleteDoc(doc(db, "students", roll));
-            alert("Reject and deleted.");
+            alert("Rejected and deleted.");
             loadPendingData();
+        }
+
+        window.deleteStudent = async function(roll) {
+            if(!confirm("Aapni ki nishchit ei user/student-ke system theke remove korte chan?")) return;
+            try {
+                await deleteDoc(doc(db, "students", roll));
+                alert("User successfully removed from database!");
+                loadPendingData();
+            } catch(err) {
+                alert("Error: " + err.message);
+            }
         }
 
         window.approvePost = async function(id, title) {
             await updateDoc(doc(db, "posts", id), { status: "approved" });
             await addDoc(collection(db, "notifications"), {
-                message: `Notun notice/assignment/note prokashito hoyeche: "${title}"`,
+                message: `Notun notice/assignment prokashito hoyeche: "${title}"`,
                 createdAt: new Date()
             });
-            alert("Post approved and notification sent!");
+            alert("Post approved!");
             loadPendingData();
             loadAdminAllPosts();
             fetchNotifications();
@@ -1033,11 +1307,12 @@
             e.preventDefault();
             const name = document.getElementById('tName').value;
             const designation = document.getElementById('tDesignation').value;
+            const department = document.getElementById('tDept').value;
             const phone = document.getElementById('tPhone').value;
             const email = document.getElementById('tEmail').value;
 
             try {
-                await addDoc(collection(db, "teachers"), { name, designation, phone, email, createdAt: new Date() });
+                await addDoc(collection(db, "teachers"), { name, designation, department, phone, email, createdAt: new Date() });
                 alert("Teacher details added successfully!");
                 closeAddTeacherModal();
                 document.getElementById('addTeacherForm').reset();
@@ -1075,7 +1350,6 @@
                 });
                 list.innerHTML = html;
             }
-            document.getElementById('notificationModal').classList.add('hidden');
             document.getElementById('notificationModal').classList.remove('hidden');
         }
 
@@ -1093,18 +1367,20 @@
 
         document.getElementById('adminSettingsForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('newAdminUser').value;
+            const username = document.getElementById('newAdminUser5').value || document.getElementById('newAdminUser').value;
             const password = document.getElementById('newAdminPass').value;
             await setDoc(doc(db, "settings", "adminCreds"), { username, password });
-            alert("Admin credentials updated successfully!");
+            alert("Super Admin credentials updated successfully!");
             closeAdminSettingsModal();
         });
 
         window.openProfileModal = function() {
-            if(!currentUser || isAdminLoggedIn) { alert("Admin cannot edit profile here."); return; }
+            if(!currentUser || currentUser.role === 'Super Admin') { alert("Super Admin profile cannot be edited here."); return; }
             document.getElementById('upName').value = currentUser.name;
             document.getElementById('upPhone').value = currentUser.phone;
             document.getElementById('upDept').value = currentUser.department;
+            document.getElementById('upSemester').value = currentUser.semester;
+            document.getElementById('upGroup').value = currentUser.group;
             document.getElementById('upAddress').value = currentUser.address;
             document.getElementById('profileModal').classList.remove('hidden');
         }
@@ -1118,13 +1394,15 @@
             const name = document.getElementById('upName').value;
             const phone = document.getElementById('upPhone').value;
             const department = document.getElementById('upDept').value;
+            const semester = document.getElementById('upSemester').value;
+            const group = document.getElementById('upGroup').value;
             const address = document.getElementById('upAddress').value;
 
             try {
                 await updateDoc(doc(db, "students", currentUser.roll), {
-                    name, phone, department, address, status: "pending"
+                    name, phone, department, semester, group, address, status: "pending"
                 });
-                alert("Profile update successful! Admin approve korar por active hobe.");
+                alert("Profile update successful! Approval required.");
                 closeProfileModal();
                 logout();
             } catch(err) {
@@ -1136,24 +1414,23 @@
             location.reload();
         }
 
-        // Fully working Global Search Bar logic
         window.handleGlobalSearch = function(q) {
             const query = q.toLowerCase().trim();
             if (!query) return;
 
-            if (query.includes('routine') || query.includes('class') || query.includes('schedule')) {
+            if (query.includes('routine') || query.includes('class')) {
                 switchTab('routine');
             } else if (query.includes('student') || query.includes('roll')) {
                 switchTab('students');
-            } else if (query.includes('teacher') || query.includes('sir') || query.includes('madam')) {
+            } else if (query.includes('teacher') || query.includes('sir')) {
                 switchTab('teachers');
-            } else if (query.includes('notice') || query.includes('announcement')) {
+            } else if (query.includes('notice')) {
                 switchTab('notices');
-            } else if (query.includes('assignment') || query.includes('homework')) {
+            } else if (query.includes('assignment')) {
                 switchTab('assignments');
-            } else if (query.includes('note') || query.includes('material')) {
+            } else if (query.includes('note')) {
                 switchTab('notes');
-            } else if (query.includes('chat') || query.includes('discussion')) {
+            } else if (query.includes('chat')) {
                 switchTab('chat');
             }
         }
