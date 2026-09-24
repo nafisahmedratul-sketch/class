@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PGPI Portal - RBAC Multi-Department</title>
+    <title>PGPI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -40,7 +40,7 @@
             <div class="bg-gradient-to-tr from-primary to-secondary p-2.5 rounded-xl text-white shadow-lg shadow-indigo-500/30">
                 <i class="fa-solid fa-graduation-cap text-xl"></i>
             </div>
-            <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent" id="navHeaderTitle">PGPI PORTAL</span>
+            <span class="font-bold text-lg tracking-wide bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent" id="navHeaderTitle">PGPI</span>
         </div>
         <div class="flex items-center gap-3">
             <button onclick="toggleTheme()" class="cursor-pointer bg-slate-700/50 hover:bg-slate-700 p-2.5 rounded-full border border-slate-600 text-amber-400 transition" title="Toggle Theme">
@@ -82,7 +82,7 @@
                     </div>
                     <input type="password" id="loginPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
-                <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-primary to-indigo-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Login to Portal</button>
+                <button type="submit" id="loginBtn" class="w-full bg-gradient-to-r from-primary to-indigo-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Login</button>
             </form>
 
             <!-- Register Form with Dept, Semester, Group -->
@@ -152,7 +152,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Email</label>
-                        <input type="email" id="regEmail" required placeholder="gmail@.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
+                        <input type="email" id="regEmail" required placeholder="example@gmail.com" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:border-primary focus:outline-none text-white">
                     </div>
                 </div>
                 <div>
@@ -171,13 +171,13 @@
             <form id="adminForm" class="space-y-4 hidden">
                 <div>
                     <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Super Admin Username</label>
-                    <input type="text" id="adminUser" required placeholder="admin" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
+                    <input type="text" id="adminUser" required placeholder="not for users" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1">
                         <label class="block text-xs font-semibold uppercase text-slate-400">Password</label>
                     </div>
-                    <input type="password" id="adminPass" required placeholder="admin123" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
+                    <input type="password" id="adminPass" required placeholder="go your loging page" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-rose-500 to-red-600 hover:opacity-90 font-semibold py-3 rounded-xl shadow-lg transition text-sm">Super Admin Master Login</button>
             </form>
@@ -192,7 +192,7 @@
                     <div id="dashAvatarText" class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-2xl font-bold text-white shadow-md">N</div>
                     <div>
                         <h2 id="dashWelcomeName" class="text-xl font-bold text-white">Welcome!</h2>
-                        <p id="dashWelcomeRole" class="text-xs text-slate-400">Portal User</p>
+                        <p id="dashWelcomeRole" class="text-xs text-slate-400">PGPI</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3 w-full md:w-auto justify-end">
@@ -231,7 +231,7 @@
                 </button>
                 <button onclick="switchTab('assignments')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-book-open"></i></div>
-                    <span class="text-xs font-semibold">Assignments</span>
+                    <span class="text-xs font-semibold">jobs</span>
                 </button>
                 <button onclick="switchTab('notes')" class="feature-btn bg-slate-800 hover:bg-slate-750 border border-slate-700 p-4 rounded-2xl text-center transition group shadow-md flex flex-col items-center justify-center gap-2">
                     <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center text-lg group-hover:scale-110 transition"><i class="fa-solid fa-file-lines"></i></div>
@@ -246,7 +246,7 @@
             <!-- RBAC Hierarchy Control Panel View -->
             <div id="adminControlPanel" class="hidden bg-slate-800 p-6 rounded-3xl border border-rose-500/30 space-y-6 shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-700 pb-3">
-                    <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i> RBAC Control & Management Panel</h3>
+                    <h3 class="text-lg font-bold text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i> Admin panel</h3>
                     <div class="flex gap-2">
                         <button id="editDevBtnAdmin" onclick="openEditDeveloperModal()" class="hidden px-3 py-1.5 bg-indigo-600/50 hover:bg-indigo-600 border border-indigo-400/40 text-white text-xs font-semibold rounded-lg transition"><i class="fa-solid fa-code mr-1"></i> Edit Developer Profile</button>
                         <button id="adminSettingsBtn" onclick="openAdminSettingsModal()" class="hidden px-3 py-1.5 bg-rose-600/35 hover:bg-rose-600/50 border border-rose-500/50 text-rose-300 text-xs font-semibold rounded-lg transition"><i class="fa-solid fa-gear mr-1"></i> Admin Settings</button>
@@ -824,14 +824,40 @@
                 fetchApprovedPosts('note', 'approvedNotesContainer');
             } else if(tabName === 'chat') {
                 container.innerHTML = `
-                    <div class="space-y-4 flex flex-col h-[500px]">
-                        <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-comments text-blue-400 mr-2"></i> Live Discussion Forum (${currentUser.department} - ${currentUser.semester})</h3>
-                        <div id="chatMessagesContainer" class="flex-1 bg-slate-900/80 border border-slate-700 rounded-2xl p-4 overflow-y-auto space-y-3">
-                            <p class="text-xs text-slate-400 italic">Loading messages...</p>
+                    <div class="space-y-0 flex flex-col h-[580px] bg-[#0b141a] border border-emerald-900/40 rounded-3xl overflow-hidden shadow-2xl relative">
+                        <!-- WhatsApp Chat Wallpaper Pattern Overlay -->
+                        <div class="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+                        <!-- WhatsApp Header -->
+                        <div class="bg-[#202c33] px-4 py-3 border-b border-slate-700/50 flex items-center justify-between z-10 shadow">
+                            <div class="flex items-center space-x-3">
+                                <div class="relative">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shadow"><i class="fa-solid fa-users"></i></div>
+                                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#202c33] rounded-full"></span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-[#e9edef] flex items-center gap-1.5">All students Group Chat <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full">${currentUser.department} - ${currentUser.semester}</span></h4>
+                                    <p class="text-[11px] text-slate-400">Online • Tap here for info</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 text-slate-300">
+                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-video text-sm"></i></button>
+                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-phone text-sm"></i></button>
+                                <button class="hover:text-emerald-400 transition"><i class="fa-solid fa-ellipsis-vertical text-sm"></i></button>
+                            </div>
                         </div>
-                        <form id="chatForm" class="flex gap-2">
-                            <input type="text" id="chatInput" required placeholder="Type your message here..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm focus:border-primary focus:outline-none text-white">
-                            <button type="submit" class="px-5 py-3 bg-blue-600 hover:bg-blue-500 font-semibold text-xs rounded-xl text-white shadow-lg"><i class="fa-solid fa-paper-plane"></i> Send</button>
+
+                        <!-- WhatsApp Messages Container -->
+                        <div id="chatMessagesContainer" class="flex-1 p-4 overflow-y-auto space-y-2.5 flex flex-col z-10">
+                            <p class="text-xs text-slate-400 italic text-center my-auto">Loading messages...</p>
+                        </div>
+
+                        <!-- WhatsApp Input Footer -->
+                        <form id="chatForm" class="p-3 bg-[#202c33] border-t border-slate-700/50 flex items-center gap-2 z-10">
+                            <button type="button" class="text-slate-400 hover:text-emerald-400 p-2 text-lg transition"><i class="fa-regular fa-face-smile"></i></button>
+                            <button type="button" class="text-slate-400 hover:text-emerald-400 p-2 text-base transition"><i class="fa-solid fa-paperclip"></i></button>
+                            <input type="text" id="chatInput" required autocomplete="off" placeholder="Type a message..." class="flex-1 bg-[#2a3942] border-none rounded-lg px-4 py-2.5 text-sm focus:outline-none text-[#e9edef] placeholder-slate-400 shadow-inner">
+                            <button type="submit" class="w-10 h-10 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow transition transform active:scale-95"><i class="fa-solid fa-paper-plane text-xs"></i></button>
                         </form>
                     </div>
                 `;
@@ -1091,20 +1117,37 @@
 
                 let html = "";
                 chats.forEach(c => {
-                    html += `
-                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700/60 text-xs">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="font-bold text-blue-400">${c.author}</span>
-                                <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">${c.role || 'Student'} (${c.department})</span>
+                    const isMe = currentUser && c.author === currentUser.name;
+                    if (isMe) {
+                        // WhatsApp Sent Message Bubble (Right Side - Green Bubble)
+                        html += `
+                            <div class="flex flex-col items-end mb-1">
+                                <div class="bg-[#005c4b] text-[#e9edef] px-3.5 py-1.5 rounded-lg rounded-tr-none max-w-[75%] text-xs shadow-sm break-words relative">
+                                    ${c.message}
+                                    <div class="text-[9px] text-emerald-200/70 text-right mt-0.5 flex items-center justify-end gap-1 select-none">
+                                        <span>Just now</span>
+                                        <i class="fa-solid fa-check-double text-[10px] text-[#53bdeb]"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-slate-200">${c.message}</p>
-                        </div>
-                    `;
+                        `;
+                    } else {
+                        // WhatsApp Received Message Bubble (Left Side - Dark Bubble with Sender Name)
+                        html += `
+                            <div class="flex flex-col items-start mb-1">
+                                <div class="bg-[#202c33] text-[#e9edef] px-3.5 py-1.5 rounded-lg rounded-tl-none max-w-[75%] text-xs shadow-sm border border-slate-700/40 break-words relative">
+                                    <span class="block text-[10px] font-bold text-emerald-400 mb-0.5">${c.author} <span class="font-normal text-slate-400 text-[9px]">(${c.role || 'Student'})</span></span>
+                                    ${c.message}
+                                    <div class="text-[9px] text-slate-400 text-right mt-0.5 select-none">Just now</div>
+                                </div>
+                            </div>
+                        `;
+                    }
                 });
-                container.innerHTML = html || `<p class="text-xs text-slate-400 italic">No messages yet.</p>`;
+                container.innerHTML = html || `<p class="text-xs text-slate-400 italic text-center my-auto">No messages yet. Start chatting!</p>`;
                 container.scrollTop = container.scrollHeight;
             } catch(e) {
-                container.innerHTML = `<p class="text-xs text-rose-400">Error loading chat.</p>`;
+                container.innerHTML = `<p class="text-xs text-rose-400 text-center">Error loading chat.</p>`;
             }
         }
 
@@ -1367,7 +1410,7 @@
 
         document.getElementById('adminSettingsForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const username = document.getElementById('newAdminUser5').value || document.getElementById('newAdminUser').value;
+            const username = document.getElementById('newAdminUser').value;
             const password = document.getElementById('newAdminPass').value;
             await setDoc(doc(db, "settings", "adminCreds"), { username, password });
             alert("Super Admin credentials updated successfully!");
@@ -1393,17 +1436,17 @@
             e.preventDefault();
             const name = document.getElementById('upName').value;
             const phone = document.getElementById('upPhone').value;
-            const department = document.getElementById('upDept').value;
+            const department = document.getElementById('upDept5').value;
             const semester = document.getElementById('upSemester').value;
             const group = document.getElementById('upGroup').value;
             const address = document.getElementById('upAddress').value;
 
             try {
-                await updateDoc(doc(db, "students", currentUser.roll), {
+                appUpdate: await updateDoc(doc(db, "students", currentUser.roll), {
                     name, phone, department, semester, group, address, status: "pending"
                 });
                 alert("Profile update successful! Approval required.");
-                closeProfileModal();
+                closeProfileManagerModal();
                 logout();
             } catch(err) {
                 alert("Error: " + err.message);
